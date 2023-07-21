@@ -8,11 +8,11 @@ from user.managers import UserManager
 
 class User(AbstractUser):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    username = models.CharField(max_length=255, unique=True)
     profile_photo_url = models.TextField(default="")
     first_name = None
     last_name = None
-    email = None
+    email = models.EmailField(blank=False, null=False)
+    is_mentor = models.BooleanField(blank=False, null=False)
 
     USERNAME_FIELD = "username"
 
