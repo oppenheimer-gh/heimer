@@ -7,4 +7,6 @@ urlpatterns = [
     path('login/', views.LoginAPIView.as_view(), name='login'),
     path('logout/', views.LogoutAPIView.as_view(), name='logout'),
     path('get/', views.GetUserView.as_view(), name='get'),
+    path('mentor/get/', views.GetMentorView.as_view(), name='get-mentor'),
+    path('mentee/get/', views.GetMenteeView.as_view(), name='get-mentee'),
 ]

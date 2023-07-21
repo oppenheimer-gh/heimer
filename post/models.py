@@ -31,3 +31,6 @@ class Post(BaseModel):
         c = 2 * asin(sqrt(a))
 
         return EARTH_RADIUS * c
+
+    def __str__(self):
+        return f"{self.message[:64]} (author: {self.user.username})"

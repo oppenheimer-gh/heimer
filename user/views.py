@@ -5,7 +5,9 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
-from user.serializers import RegisterSerializer, UserSerializer
+import user
+from user.models import User, Mentor, Mentee
+from user.serializers import RegisterSerializer, UserSerializer, MentorSerializer, MenteeSerializer
 
 
 class RegisterAPIView(GenericAPIView):
@@ -68,4 +70,34 @@ class GetUserView(GenericAPIView):
         serializer = UserSerializer(request.user)
         return Response({
             'user': serializer.data
+        })
+
+
+class GetMentorView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        try:
+            mentor = request.user.mentor
+        except Mentor.DoesNotExist:
+            return Response("User is not a mentor", status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = MentorSerializer(mentor)
+        return Response({
+            'mentor': serializer.data
+        })
+
+
+class GetMenteeView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        try:
+            mentee = request.user.mentee
+        except Mentee.DoesNotExist:
+            return Response("User is not a mentee", status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = MenteeSerializer(mentee)
+        return Response({
+            'mentee': serializer.data
         })

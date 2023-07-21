@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from user.models import User
+from user.models import User, Mentor
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -30,4 +30,29 @@ class UserSerializer(serializers.ModelSerializer):
             'profile_photo_url',
             'email',
             'is_mentor',
+        )
+
+
+class MentorSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    get_mentees = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Mentor
+        fields = (
+            'user',
+            'is_available',
+            'get_mentees',
+        )
+
+
+class MenteeSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    mentor = MentorSerializer(read_only=True)
+
+    class Meta:
+        model = Mentor
+        fields = (
+            'user',
+            'mentor',
         )
