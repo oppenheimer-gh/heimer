@@ -21,15 +21,18 @@ class CreatePostSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+
     class Meta:
         model = Post
         fields = (
             'id',
+            'created_at',
             'source_latitude',
             'source_longitude',
             'destination_latitude',
             'destination_longitude',
             'message',
             'distance_in_km',
+            'comments_count',
             'user',
         )
