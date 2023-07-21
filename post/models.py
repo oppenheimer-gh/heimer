@@ -12,8 +12,9 @@ class Post(BaseModel):
     source_longitude = models.FloatField()
     destination_latitude = models.FloatField()
     destination_longitude = models.FloatField()
-    message = models.TextField()
+    message = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comments_count = models.IntegerField(default=0)
 
     @property
     def distance_in_km(self) -> float:

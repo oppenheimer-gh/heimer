@@ -41,6 +41,7 @@ class GetAllPostAPIView(GenericAPIView):
             'posts': serializer.data
         }, status=status.HTTP_200_OK)
 
+
 class GetPostAPIView(GenericAPIView):
     permission_classes = (AllowAny,)
 
@@ -56,3 +57,17 @@ class GetPostAPIView(GenericAPIView):
         }, status=status.HTTP_200_OK)
 
 
+class DeletePostAPIView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def delete(self, request, post_id):
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        if post.user != request.user:
+            return Response({'error': 'You are not the owner of this post'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
