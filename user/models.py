@@ -33,8 +33,12 @@ class Mentor(models.Model):
     _safedelete_policy = SOFT_DELETE_CASCADE
 
     @property
-    def get_mentees(self):
+    def mentees(self):
         return Mentee.objects.filter(mentor=self)
+
+    @property
+    def mentees_count(self):
+        return self.mentees.count()
 
     def __str__(self):
         return self.user.username

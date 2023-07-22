@@ -35,15 +35,41 @@ class UserSerializer(serializers.ModelSerializer):
 
 class MentorSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    get_mentees = serializers.StringRelatedField(many=True)
+    mentees = UserSerializer(read_only=True, many=True)
+    mentees_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Mentor
         fields = (
             'user',
             'is_available',
-            'get_mentees',
+            'mentees',
+            'mentees_count',
         )
+
+
+class MentorListSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    mentees_count = serializers.IntegerField(read_only=True)
+    source_country = serializers.SerializerMethodField()
+    destination_country = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Mentor
+        fields = (
+            'user',
+            'mentees_count',
+            'source_country',
+            'destination_country',
+        )
+
+    def get_source_country(self, obj):
+        post = obj.user.posts.first()
+        return post.source_country if post else None
+
+    def get_destination_country(self, obj):
+        post = obj.user.posts.first()
+        return post.destination_country if post else None
 
 
 class MenteeSerializer(serializers.ModelSerializer):
