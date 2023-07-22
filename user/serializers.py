@@ -65,7 +65,9 @@ class MentorListSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     mentees_count = serializers.IntegerField(read_only=True)
     source_country = serializers.SerializerMethodField()
+    source_country_code = serializers.SerializerMethodField()
     destination_country = serializers.SerializerMethodField()
+    destination_country_code = serializers.SerializerMethodField()
 
     class Meta:
         model = Mentor
@@ -73,7 +75,9 @@ class MentorListSerializer(serializers.ModelSerializer):
             'user',
             'mentees_count',
             'source_country',
+            'source_country_code',
             'destination_country',
+            'destination_country_code',
             'id'
         )
 
@@ -81,9 +85,17 @@ class MentorListSerializer(serializers.ModelSerializer):
         post = obj.user.posts.first()
         return post.source_country if post else None
 
+    def get_source_country_code(self, obj):
+        post = obj.user.posts.first()
+        return post.source_country_code if post else None
+
     def get_destination_country(self, obj):
         post = obj.user.posts.first()
         return post.destination_country if post else None
+
+    def get_destination_country_code(self, obj):
+        post = obj.user.posts.first()
+        return post.destination_country_code if post else None
 
 
 class MenteeSerializer(serializers.ModelSerializer):
