@@ -88,3 +88,4 @@ fabric.properties
 misc.xml
 heimer/__pycache__/
 *.pyc
+.idea/*
