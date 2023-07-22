@@ -1,1 +1,1 @@
-web: gunicorn heimer.wsgi
+web: python manage.py migrate && gunicorn heimer.wsgi
