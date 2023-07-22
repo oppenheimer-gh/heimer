@@ -94,8 +94,12 @@ WSGI_APPLICATION = 'heimer.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': '48RR149Lu67AcCR1OMNz',
+        'HOST': 'containers-us-west-159.railway.app',
+        'PORT': '7890',
     }
 }
 
