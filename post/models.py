@@ -11,10 +11,12 @@ class Post(BaseModel):
     source_latitude = models.FloatField()
     source_longitude = models.FloatField()
     source_country = models.CharField(max_length=255, null=True, blank=True)
+    source_country_code = models.CharField(max_length=10, blank=True, null=True)
     destination_latitude = models.FloatField()
     destination_longitude = models.FloatField()
     destination_country = models.CharField(max_length=255, null=True, blank=True)
-    message = models.CharField(max_length=255)
+    destination_country_code = models.CharField(max_length=10, blank=True, null=True)
+    message = models.CharField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     comments_count = models.IntegerField(default=0)
 
@@ -57,7 +59,6 @@ class Post(BaseModel):
         )
 
         return matching_both.union(matching_destination_only)
-
 
     def __str__(self):
         return f"{self.message[:64]} (author: {self.user.username})"

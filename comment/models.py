@@ -6,6 +6,6 @@ from user.models import User
 
 
 class Comment(BaseModel):
-    message = models.TextField(max_length=255)
+    message = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
