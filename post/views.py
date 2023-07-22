@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from post.models import Post
 from post.serializers import CreatePostSerializer, PostSerializer
-from user.serializers import UserSerializer
+from user.serializers import UserSerializer, MentorListSerializer
 
 
 class CreatePostAPIView(GenericAPIView):
@@ -71,3 +71,15 @@ class DeletePostAPIView(GenericAPIView):
 
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AvailableMentorView(GenericAPIView):
+    def get(self, request, post_id):
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            return Response({"error": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        available_mentors = post.available_mentors
+        serializer = MentorListSerializer(available_mentors, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

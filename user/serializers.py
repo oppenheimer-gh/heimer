@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from user.models import User
+from user.models import User, Mentor, Mentee
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -30,4 +30,68 @@ class UserSerializer(serializers.ModelSerializer):
             'profile_photo_url',
             'email',
             'is_mentor',
+        )
+
+
+class MenteeForMentorSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Mentee
+        fields = (
+            'user',
+            'id',
+        )
+
+
+class MentorSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    mentees = MenteeForMentorSerializer(read_only=True, many=True)
+    mentees_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Mentor
+        fields = (
+            'user',
+            'is_available',
+            'mentees',
+            'mentees_count',
+            'id',
+        )
+
+
+class MentorListSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    mentees_count = serializers.IntegerField(read_only=True)
+    source_country = serializers.SerializerMethodField()
+    destination_country = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Mentor
+        fields = (
+            'user',
+            'mentees_count',
+            'source_country',
+            'destination_country',
+            'id'
+        )
+
+    def get_source_country(self, obj):
+        post = obj.user.posts.first()
+        return post.source_country if post else None
+
+    def get_destination_country(self, obj):
+        post = obj.user.posts.first()
+        return post.destination_country if post else None
+
+
+class MenteeSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Mentee
+        fields = (
+            'user',
+            'mentor_id',
+            'id'
         )
