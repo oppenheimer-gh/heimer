@@ -100,11 +100,12 @@ class MentorListSerializer(serializers.ModelSerializer):
 
 class MenteeSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    mentor = MentorListSerializer(read_only=True)
 
     class Meta:
         model = Mentee
         fields = (
             'user',
-            'mentor_id',
+            'mentor',
             'id'
         )
