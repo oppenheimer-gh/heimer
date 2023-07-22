@@ -12,9 +12,11 @@ class CreatePostSerializer(serializers.ModelSerializer):
             'source_latitude',
             'source_longitude',
             'source_country',
+            'source_country_code',
             'destination_latitude',
             'destination_longitude',
             'destination_country',
+            'destination_country_code',
             'message',
         )
 
@@ -34,9 +36,11 @@ class PostSerializer(serializers.ModelSerializer):
             'source_latitude',
             'source_longitude',
             'source_country',
+            'source_country_code',
             'destination_latitude',
             'destination_longitude',
             'destination_country',
+            'destination_country_code',
             'message',
             'distance_in_km',
             'comments_count',

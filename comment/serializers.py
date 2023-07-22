@@ -5,7 +5,7 @@ from user.serializers import UserSerializer
 
 
 class CreateCommentSerializer(serializers.ModelSerializer):
-    message = serializers.CharField(max_length=255)
+    message = serializers.CharField(max_length=500)
 
     class Meta:
         model = Comment
