@@ -80,6 +80,6 @@ class AvailableMentorView(GenericAPIView):
         except Post.DoesNotExist:
             return Response({"error": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        available_mentors = post.available_mentors
+        available_mentors = post.available_mentors.all()[:5]
         serializer = MentorListSerializer(available_mentors, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
