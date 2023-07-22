@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from user.models import User, Mentor
+from user.models import User, Mentor, Mentee
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -33,9 +33,20 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 
+class MenteeForMentorSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Mentee
+        fields = (
+            'user',
+            'id',
+        )
+
+
 class MentorSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    mentees = UserSerializer(read_only=True, many=True)
+    mentees = MenteeForMentorSerializer(read_only=True, many=True)
     mentees_count = serializers.IntegerField(read_only=True)
 
     class Meta:
@@ -45,6 +56,7 @@ class MentorSerializer(serializers.ModelSerializer):
             'is_available',
             'mentees',
             'mentees_count',
+            'id',
         )
 
 
@@ -61,6 +73,7 @@ class MentorListSerializer(serializers.ModelSerializer):
             'mentees_count',
             'source_country',
             'destination_country',
+            'id'
         )
 
     def get_source_country(self, obj):
@@ -74,11 +87,11 @@ class MentorListSerializer(serializers.ModelSerializer):
 
 class MenteeSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    mentor = MentorSerializer(read_only=True)
 
     class Meta:
-        model = Mentor
+        model = Mentee
         fields = (
             'user',
-            'mentor',
+            'mentor_id',
+            'id'
         )

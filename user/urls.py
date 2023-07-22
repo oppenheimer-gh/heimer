@@ -9,4 +9,5 @@ urlpatterns = [
     path('get/', views.GetUserView.as_view(), name='get'),
     path('mentor/get/', views.GetMentorView.as_view(), name='get-mentor'),
     path('mentee/get/', views.GetMenteeView.as_view(), name='get-mentee'),
+    path('mentee/update-mentor', views.UpdateMenteeMentorView.as_view(), name='update-mentee-mentor'),
 ]

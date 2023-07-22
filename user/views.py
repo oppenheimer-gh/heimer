@@ -101,3 +101,21 @@ class GetMenteeView(GenericAPIView):
         return Response({
             'mentee': serializer.data
         })
+
+
+class UpdateMenteeMentorView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def patch(self, request):
+        try:
+            mentee = request.user.mentee
+        except Mentee.DoesNotExist:
+            return Response("User is not a mentee", status=status.HTTP_400_BAD_REQUEST)
+
+        mentee.mentor = Mentor.objects.get(id=request.data.get('mentor_id'))
+        mentee.save()
+
+        serializer = MenteeSerializer(mentee)
+        return Response({
+            'mentee': serializer.data
+        })

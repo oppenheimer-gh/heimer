@@ -25,6 +25,7 @@ class User(AbstractUser):
 
 
 class Mentor(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="mentor")
@@ -45,6 +46,7 @@ class Mentor(models.Model):
 
 
 class Mentee(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="mentee")
