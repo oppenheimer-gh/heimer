@@ -95,11 +95,11 @@ WSGI_APPLICATION = 'heimer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'suitor5-finite-subheader',
-        'HOST': 'db.htidwemjafegevidzjpk.supabase.co',
-        'PORT': '5432',
+        'PASSWORD': '48RR149Lu67AcCR1OMNz',
+        'HOST': 'containers-us-west-159.railway.app',
+        'PORT': '7890',
     }
 }
 
