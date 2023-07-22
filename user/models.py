@@ -20,6 +20,10 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    @property
+    def has_posted(self):
+        return self.posts.exists()
+
     def __str__(self):
         return self.username
 

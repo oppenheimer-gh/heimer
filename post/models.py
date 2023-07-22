@@ -14,7 +14,7 @@ class Post(BaseModel):
     destination_latitude = models.FloatField()
     destination_longitude = models.FloatField()
     destination_country = models.CharField(max_length=255, null=True, blank=True)
-    message = models.CharField(max_length=255)
+    message = models.CharField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     comments_count = models.IntegerField(default=0)
 

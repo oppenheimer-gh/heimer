@@ -87,6 +87,23 @@ class GetMentorView(GenericAPIView):
             'mentor': serializer.data
         })
 
+class ToggleMentorView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def patch(self, request):
+        try:
+            mentor = request.user.mentor
+        except Mentor.DoesNotExist:
+            return Response("User is not a mentor", status=status.HTTP_400_BAD_REQUEST)
+
+        mentor.is_available = not mentor.is_available
+        mentor.save()
+
+        serializer = MentorSerializer(mentor)
+        return Response({
+            'mentor': serializer.data
+        })
+
 
 class GetMenteeView(GenericAPIView):
     permission_classes = (IsAuthenticated,)

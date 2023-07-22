@@ -30,6 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
             'profile_photo_url',
             'email',
             'is_mentor',
+            'has_posted'
         )
 
 
